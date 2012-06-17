@@ -1,0 +1,105 @@
+Declarações de variáveis:
+-------------------------
+	int x;
+	string s;
+
+Atribuições:
+------------
+	x = 10;
+	s = "Olá mundo";
+
+Declarações de variáveis com atribuição:
+----------------------------------------
+	int x = 10;
+	string s = "Olá mundo";
+
+Operadores matemáticos:
+-----------------------
+	+
+	-
+	/
+	*
+	%
+	^
+
+Operadores condicionais:
+------------------------
+	>
+	<
+	>=
+	<=
+	!=
+	==
+
+Operadores de strings (tipo primitivo):
+---------------------------------------
+	++: concatenação
+	[x]: acesso a índice
+
+Operadores de vetores:
+----------------------
+	[x]: acesso a índice
+
+Operadores de objetos/tipos:
+----------------------------
+	new: instanciação
+	delete
+	this: Acesso à instância atual
+	.: Acesso a membro (atributo, método)
+	self: Acesso a classe atual (somente se implementar atributos e métodos estáticos)
+
+Funções pré-definidas:
+----------------------
+	print
+	substring
+	fopen
+	fclose
+	fwrite
+	fread
+
+Funções:
+--------
+	void main does {
+	}
+
+	int soma(int x, int y) does {
+		return x + y;
+	}
+
+Classes:
+--------
+	class MyClass {
+	}
+
+Atributos:
+----------
+	class MyClass {
+		protected int x;
+		protected int y;
+	}
+
+Métodos:
+--------
+	class MyClass {
+		protected int x;
+		protected int y;
+
+		public constructor MyClass(int x, double y) does {
+			this.x = x;
+			this.y = y;
+		}
+
+		public int soma does {
+			return this.x + this.y;
+		}
+	}
+
+Instanciação:
+-------------
+	MyClass m = new MyClass(10, 20);
+	print(m.soma() ++ "\n");
+
+Adicionais:
+	include/import
+	escopo por bloco
+	herança
