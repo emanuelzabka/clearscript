@@ -9,6 +9,7 @@ class ExprResult {
 		Val* mValue;
 
 	public:
+		ExprResult(std::string type, Val* value);
 		std::string getType();
 		Val* getValue();
 };
