@@ -2,9 +2,10 @@
 
 #include "Symbol.h"
 
-Symbol::Symbol(std::string name)
+Symbol::Symbol(std::string name, std::string type)
 {
 	mName = name;
+	mType = type;
 }
 
 std::string Symbol::getType()

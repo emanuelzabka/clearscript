@@ -9,7 +9,7 @@ class Symbol {
 		std::string mType;
 		Val* mValue;
 	public:
-		Symbol(std::string name);
+		Symbol(std::string name, std::string type);
 		std::string getType();
 		void setType(std::string type);
 		Val* getValue();

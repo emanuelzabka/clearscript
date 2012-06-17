@@ -3,9 +3,10 @@
 #include <string>
 #include <vector>
 #include "ExprVal.h"
+#include "Val.h"
 
-class VectorVal: public ExprVal<std::vector<std::string>*> {
+class VectorVal: public ExprVal< std::vector<Val*> > {
 	public:
-		VectorVal(std::vector<std::string>* value);
+		VectorVal(std::vector<Val*> value);
 };
 

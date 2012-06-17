@@ -2,6 +2,6 @@
 
 #include "ExprVal.h";
 
-class VoidVal: public ExprVal<short> {
+class VoidVal: public ExprVal<bool> {
 };
 

@@ -2,7 +2,7 @@
 
 #include "VectorVal.h"
 
-VectorVal::VectorVal(std::vector<std::string>* value)
+VectorVal::VectorVal(std::vector<Val*> value)
 {
 	mValue = value;
 }
