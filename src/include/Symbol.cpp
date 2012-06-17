@@ -8,6 +8,11 @@ Symbol::Symbol(std::string name, std::string type)
 	mType = type;
 }
 
+std::string Symbol::getName()
+{
+	return mName;
+}
+
 std::string Symbol::getType()
 {
 	return mType;
