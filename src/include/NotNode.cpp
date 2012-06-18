@@ -25,9 +25,16 @@ ExprResult NotNode::eval()
 			result.setValue("int", (long)(value == 0 ? 1 : 0));
 		}
 	}
+	else if (targetRes.getType() == "bool")
+	{
+		bool value = ((BoolVal*)targetRes.getValue())->getValue();
+		result.setType("bool");
+		result.setValue((Val*)new BoolVal(!value));
+	}
 	else
 	{
 		// @TODO Erro fatal uso de tipo não numérico no not
 		exit(1);
 	}
+	return result;
 }
