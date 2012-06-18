@@ -5,5 +5,6 @@
 class SumNode: public BinaryOpNode {
 	public:
 		SumNode(AstNode* left, AstNode* right);
+		ExprResult eval();
 };
 

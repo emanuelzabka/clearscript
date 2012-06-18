@@ -7,7 +7,14 @@ class ExprVal: public Val {
 	protected:
 		T mValue;
 	public:
-		void setValue(T value);
-		T getValue();
+		void setValue(T value)
+		{
+			mValue = value;
+		}
+
+		T getValue()
+		{
+			return mValue;
+		}
 };
 
