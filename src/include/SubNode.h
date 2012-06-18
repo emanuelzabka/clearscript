@@ -5,5 +5,6 @@
 class SubNode: public BinaryOpNode {
 	public:
 		SubNode(AstNode* left, AstNode* right);
+		ExprResult eval();
 };
 

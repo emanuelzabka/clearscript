@@ -27,49 +27,121 @@ Val* ExprResult::getValue()
 	return mValue;
 }
 
-bool ExprResult::isNumeric(ExprResult& res)
+bool ExprResult::isNumeric()
 {
-	return isInteger(res) || isFloat(res);
+	return isInteger() || isFloat();
 }
 
-bool ExprResult::isFloat(ExprResult& res)
+bool ExprResult::isFloat()
 {
 	return
-		res.getType() == "float" ||
-		res.getType() == "double";
+		getType() == "float" ||
+		getType() == "double";
 }
 
-bool ExprResult::isInteger(ExprResult& res)
+bool ExprResult::isInteger()
 {
 	return
-		res.getType() == "int" ||
-		res.getType() == "long";
+		getType() == "int" ||
+		getType() == "long";
 }
 
-long ExprResult::getIntegerValue(ExprResult& res)
+long ExprResult::getIntegerValue()
 {
-	if (res.getType() == "int")
+	if (getType() == "int")
 	{
-		return ((IntVal*)res.getValue())->getValue();
+		return ((IntVal*)getValue())->getValue();
 	}
-	else if (res.getType() == "long")
+	else if (getType() == "long")
 	{
-		return ((LongVal*)res.getValue())->getValue();
+		return ((LongVal*)getValue())->getValue();
 	}
 	// @TODO Erro chamada com parâmetros indevidos
 	return 0;
 }
 
-double ExprResult::getFloatValue(ExprResult& res)
+double ExprResult::getFloatValue()
 {
-	if (res.getType() == "float")
+	if (getType() == "float")
 	{
-		return ((FloatVal*)res.getValue())->getValue();
+		return ((FloatVal*)getValue())->getValue();
 	}
-	else if (res.getType() == "double")
+	else if (getType() == "double")
 	{
-		return ((DoubleVal*)res.getValue())->getValue();
+		return ((DoubleVal*)getValue())->getValue();
 	}
 	// @TODO Erro chamada com parâmetros indevidos
 	return 0;
+}
+
+std::string ExprResult::getLargerType(ExprResult& res1, ExprResult& res2)
+{
+	std::string result;
+	if (res1.isFloat())
+	{
+		if (!res2.isFloat())
+		{
+			result = res1.getType();
+		}
+		else if (res1.getType() == "double")
+		{
+			result = "double";
+		}
+		else
+		{
+			result = res2.getType();
+		}
+	}
+	else if (res1.isInteger())
+	{
+		if (res2.isInteger())
+		{
+			if (res1.getType() == "long")
+			{
+				result = "long";
+			}
+			else
+			{
+				result = res2.getType();
+			}
+		}
+		else if (res2.isFloat())
+		{
+			result = res2.getType();
+		}
+	}
+	return result;
+}
+
+void ExprResult::setValue(Val* value)
+{
+	mValue = value;
+}
+
+void ExprResult::setValue(std::string type, long value)
+{
+	if (type == "int")
+	{
+		mValue = (Val*)new IntVal(value);
+		mType = type;
+	}
+	else if (type == "long")
+	{
+		mValue = (Val*)new LongVal(value);
+		mType = type;
+	}
+}
+
+void ExprResult::setValue(std::string type, double value)
+{
+	if (type == "float")
+	{
+		mValue = (Val*)new FloatVal(value);
+		mType = type;
+	}
+	else if (type == "double")
+	{
+		mValue = (Val*)new DoubleVal(value);
+		mType = type;
+	}
 }

@@ -12,11 +12,15 @@ class ExprResult {
 		ExprResult();
 		ExprResult(std::string type, Val* value);
 		std::string getType();
+		void setValue(Val* value);
+		void setValue(std::string type, long value);
+		void setValue(std::string type, double value);
 		Val* getValue();
-		bool isNumeric(ExprResult& res);
-		bool isFloat(ExprResult& res);
-		bool isInteger(ExprResult& res);
-		long getIntegerValue(ExprResult& res);
-		double getFloatValue(ExprResult& res);
+		bool isNumeric();
+		bool isFloat();
+		bool isInteger();
+		long getIntegerValue();
+		double getFloatValue();
+		std::string getLargerType(ExprResult& res1, ExprResult& res2);
 };
 

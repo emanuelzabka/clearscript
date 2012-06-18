@@ -7,5 +7,6 @@ class NotNode: public AstNode {
 		AstNode* mTarget;
 	public:
 		NotNode(AstNode* target);
+		ExprResult eval();
 };
 
