@@ -1,8 +1,9 @@
+#include <string>
 #include "AssignNode.h"
 
-AssignNode::AssignNode(AstNode* left, AstNode* right)
+AssignNode::AssignNode(Identifier* target, AstNode* value)
 {
-	mLeft = left;
-	mRight = right;
+	mTarget = target;
+	mValue = value;
 }
 

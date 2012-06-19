@@ -1,9 +1,14 @@
 #pragma once
 
+#include <string>
 #include "BinaryOpNode.h"
+#include "Identifier.h"
 
-class AssignNode: public BinaryOpNode {
+class AssignNode: public AstNode {
+	protected:
+		Identifier* mTarget;
+		AstNode* mValue;
 	public:
-		AssignNode(AstNode* left, AstNode* right);
+		AssignNode(Identifier* target, AstNode* value);
 };
 
