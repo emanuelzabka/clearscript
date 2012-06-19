@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "BinaryOpNode.h"
 
 enum ConditionType {
@@ -20,7 +21,13 @@ enum ConditionType {
 class CondNode: public BinaryOpNode  {
 	protected:
 		ConditionType mType;
+		bool compare(std::string left, std::string right);
+		bool compare(long left, long right);
+		bool compare(double left, double right);
+		bool compare(long left, double right);
+		bool compare(double right, long left);
 	public:
 		CondNode(AstNode* left, AstNode* right, ConditionType type);
+		ExprResult eval();
 };
 
