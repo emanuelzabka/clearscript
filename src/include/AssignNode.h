@@ -6,9 +6,9 @@
 
 class AssignNode: public AstNode {
 	protected:
-		Identifier* mTarget;
+		IdentifierNode* mTarget;
 		AstNode* mValue;
 	public:
-		AssignNode(Identifier* target, AstNode* value);
+		AssignNode(IdentifierNode* target, AstNode* value);
 };
 

@@ -2,11 +2,11 @@
 
 #include "AstNode.h"
 
-class NotNode: public AstNode {
+class LogNotOpNode: public AstNode {
 	protected:
 		AstNode* mTarget;
 	public:
-		NotNode(AstNode* target);
+		LogNotOpNode(AstNode* target);
 		ExprResult eval();
 };
 

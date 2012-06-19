@@ -22,6 +22,7 @@ class ExprResult {
 		bool isInteger();
 		long getIntegerValue();
 		double getFloatValue();
+		bool getBoolVal();
 		std::string getLargerType(ExprResult& res1, ExprResult& res2);
 };
 

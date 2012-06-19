@@ -3,6 +3,8 @@
 #include "FloatVal.h"
 #include "LongVal.h"
 #include "DoubleVal.h"
+#include "BoolVal.h"
+#include "StringVal.h"
 
 ExprResult::ExprResult()
 {
@@ -148,3 +150,26 @@ void ExprResult::setType(std::string type)
 {
 	mType = type;
 }
+
+bool ExprResult::getBoolVal()
+{
+	bool result = false;
+	if (getType() == "bool")
+	{
+		result = ((BoolVal*)getValue())->getValue();
+	}
+	if (isInteger())
+	{
+		result = (bool)getIntegerValue();
+	}
+	else if (isFloat())
+	{
+		result = (bool)getFloatValue();
+	}
+	else if (getType() == "string")
+	{
+		result = !((StringVal*)getValue())->getValue().empty();
+	}
+	return result;
+}
+

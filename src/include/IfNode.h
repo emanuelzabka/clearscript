@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AstNode.h"
+#include "ExprResult.h"
 
 class IfNode: public AstNode {
 	protected:
@@ -9,5 +10,6 @@ class IfNode: public AstNode {
 		AstNode* mElseBody;
 	public:
 		IfNode(AstNode* cond, AstNode* thenBody, AstNode* elseBody);
+		ExprResult eval();
 };
 

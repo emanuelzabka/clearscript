@@ -6,3 +6,12 @@ WhileNode::WhileNode(AstNode* cond, AstNode* body)
 	mBody = body;
 }
 
+ExprResult WhileNode::eval()
+{
+	ExprResult result;
+	while (mCond->eval().getBoolVal())
+	{
+		mBody->eval();
+	}
+	return result;
+}
