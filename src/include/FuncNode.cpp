@@ -1,5 +1,3 @@
-#pragma once
-
 #include "FuncNode.h"
 
 FuncNode::FuncNode(std::string name, std::vector<FuncArgNode*> args, AstNode* body)

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "AssignNode.h"
 
 AssignNode::AssignNode(AstNode* left, AstNode* right)

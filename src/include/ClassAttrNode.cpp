@@ -1,5 +1,3 @@
-#pragma once
-
 #include "ClassAttrNode.h"
 
 ClassAttrNode::ClassAttrNode(

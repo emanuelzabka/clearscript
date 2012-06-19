@@ -1,5 +1,3 @@
-#pragma once
-
 #include "WhileNode.h"
 
 WhileNode::WhileNode(AstNode* cond, AstNode* body)

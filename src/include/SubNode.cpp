@@ -1,5 +1,3 @@
-#pragma once
-
 #include "SubNode.h"
 #include <cstdlib>
 

@@ -1,6 +1,5 @@
-#pragma once
-
 #include "NotNode.h"
+#include "BoolVal.h"
 #include <cstdlib>
 
 NotNode::NotNode(AstNode* target)

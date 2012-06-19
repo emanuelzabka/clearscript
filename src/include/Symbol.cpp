@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Symbol.h"
 
 Symbol::Symbol(std::string name, std::string type)

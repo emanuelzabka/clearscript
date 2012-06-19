@@ -1,5 +1,3 @@
-#pragma once
-
 #include "ExprResult.h"
 #include "IntVal.h"
 #include "FloatVal.h"
@@ -144,4 +142,9 @@ void ExprResult::setValue(std::string type, double value)
 		mValue = (Val*)new DoubleVal(value);
 		mType = type;
 	}
+}
+
+void ExprResult::setType(std::string type)
+{
+	mType = type;
 }

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "ClassMethodNode.h"
 
 ClassMethodNode::ClassMethodNode(

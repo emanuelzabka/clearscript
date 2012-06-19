@@ -1,5 +1,3 @@
-#pragma once
-
 #include "IfNode.h"
 
 IfNode::IfNode(AstNode* cond, AstNode* thenBody, AstNode* elseBody)
