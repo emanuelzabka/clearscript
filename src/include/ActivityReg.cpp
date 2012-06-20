@@ -23,6 +23,11 @@ SymbolTable* ActivityReg::top()
 	return mTables.back();
 }
 
+SymbolTable* ActivityReg::global()
+{
+	return mTables.front();
+}
+
 ActivityReg* ActivityReg::getInstance()
 {
 	if (!mInstance)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "AstNode.h"
 #include "Val.h"
 #include "IntVal.h"
 #include "LongVal.h"
@@ -16,12 +17,16 @@ class Symbol {
 		std::string mType;
 		Val* mValue;
 		bool mVar;
+		void createValue();
+		AstNode* mNode;
+
 	public:
 		Symbol(std::string name, std::string type);
 		Symbol(std::string name, std::string type, bool var);
 		std::string getName();
 		std::string getType();
 		void setType(std::string type);
+		void setNode(AstNode* node);
 		Val* getValue();
 		void setValue(Val* value);
 		void setValue(IntVal* value);

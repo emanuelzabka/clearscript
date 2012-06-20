@@ -14,6 +14,7 @@ class ActivityReg {
 		void push(SymbolTable* table);
 		void pop();
 		SymbolTable* top();
+		SymbolTable* global();
 		Symbol* getUserType(std::string type);
 		bool isBuiltinType(std::string type);
 };

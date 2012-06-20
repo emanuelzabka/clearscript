@@ -10,5 +10,6 @@ class FuncArgNode: public AstNode {
 		/* @TODO default value */
 	public:
 		FuncArgNode(std::string name, std::string type);
+		ExprResult eval();
 };
 

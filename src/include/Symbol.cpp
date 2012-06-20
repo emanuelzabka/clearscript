@@ -5,6 +5,8 @@ Symbol::Symbol(std::string name, std::string type)
 {
 	mName = name;
 	mType = type;
+	mValue = NULL;
+	mNode = NULL;
 	mVar = false;
 }
 
@@ -12,7 +14,45 @@ Symbol::Symbol(std::string name, std::string type, bool var)
 {
 	mName = name;
 	mType = type;
+	mNode = NULL;
 	mVar = var;
+	if (mVar)
+	{
+		createValue();
+	}
+}
+
+void Symbol::createValue()
+{
+	if (mType == "int")
+	{
+		mValue = (Val*)new IntVal(0);
+	}
+	else if (mType == "long")
+	{
+		mValue = (Val*)new LongVal(0);
+	}
+	else if (mType == "float")
+	{
+		mValue = (Val*)new FloatVal(0.0);
+	}
+	else if (mType == "double")
+	{
+		mValue = (Val*)new DoubleVal(0.0);
+	}
+	else if (mType == "bool")
+	{
+		mValue = (Val*)new BoolVal(false);
+	}
+	else if (mType == "string")
+	{
+		mValue = (Val*)new StringVal("");
+	}
+	else
+	{
+		// Object
+		mValue = (Val*)new ObjectVal(NULL);
+	}
 }
 
 bool Symbol::isVar()
@@ -28,6 +68,11 @@ std::string Symbol::getName()
 std::string Symbol::getType()
 {
 	return mType;
+}
+
+void Symbol::setNode(AstNode* node)
+{
+	mNode = node;
 }
 
 void Symbol::setType(std::string type)
@@ -261,6 +306,7 @@ void Symbol::setValue(std::string fromType, Val* value)
 	}
 	else if (fromType == "object")
 	{
+		// @TODO Verificar o tipo do objeto nesse caso
 		setValue((ObjectVal*)value);
 	}
 }
