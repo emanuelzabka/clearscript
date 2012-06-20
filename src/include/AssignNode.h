@@ -2,7 +2,7 @@
 
 #include <string>
 #include "BinaryOpNode.h"
-#include "Identifier.h"
+#include "IdentifierNode.h"
 
 class AssignNode: public AstNode {
 	protected:
@@ -10,5 +10,6 @@ class AssignNode: public AstNode {
 		AstNode* mValue;
 	public:
 		AssignNode(IdentifierNode* target, AstNode* value);
+		ExprResult eval();
 };
 

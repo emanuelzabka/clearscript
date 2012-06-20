@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include "VarDeclNode.h"
-#include "ActivityRegs.h"
+#include "ActivityReg.h"
 
 
 VarDeclNode::VarDeclNode(std::string type, std::string name)
@@ -11,7 +11,7 @@ VarDeclNode::VarDeclNode(std::string type, std::string name)
 
 ExprResult VarDeclNode::eval()
 {
-	ActivityRegs* areg = ActivityRegs::getInstance();
+	ActivityReg* areg = ActivityReg::getInstance();
 	SymbolTable* table = areg->top();
 	if (areg->isBuiltinType(mType))
 	{

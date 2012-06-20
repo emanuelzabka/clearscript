@@ -9,6 +9,7 @@
 ExprResult::ExprResult()
 {
 	mType = "void";
+	mValue = NULL;
 }
 
 ExprResult::ExprResult(std::string type, Val* value)
