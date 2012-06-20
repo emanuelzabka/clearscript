@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include "VarDeclNode.h"
 #include "ActivationReg.h"
+#include "Symbol.h"
 
 
 VarDeclNode::VarDeclNode(std::string type, std::string name)
@@ -15,13 +16,15 @@ ExprResult VarDeclNode::eval()
 	SymbolTable* table = areg->top();
 	if (areg->isBuiltinType(mType))
 	{
-		if (table->get(mName) == NULL)
+		Symbol* sym = table->get(mName);
+		if (sym == NULL)
 		{
 			table->add(new Symbol(mName, mType));
 		}
-		else
+		else if (sym->getType() != mType)
 		{
-			// @TODO Redeclaração de variável dentro do mesmo escopo
+			// @TODO Redeclaração de variável dentro do mesmo escopo com tipos diferentes
+			exit(1);
 		}
 	}
 	else

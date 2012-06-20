@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <vector>
 #include "FunCallNode.h"
-#include "ActivityReg.h"
+#include "ActivationReg.h"
 #include "SymbolTable.h"
 #include "FuncNode.h"
 #include "FuncArgNode.h"
@@ -16,13 +16,15 @@ FunCallNode::FunCallNode(std::string name, std::vector<AstNode*> args)
 ExprResult FunCallNode::eval()
 {
 	ExprResult result;
-	ActivityReg* areg = ActivityReg::getInstance();
+	ActivationReg* areg = ActivationReg::getInstance();
 	SymbolTable* table = areg->global();
 	Symbol* sym = table->get(mName);
 	if (sym != NULL && sym->getType() == "function")
 	{
 		// Tabela de símbolos de escopo local
 		SymbolTable* local = areg->top();
+		SymbolTable* new_table = new SymbolTable();
+		areg->push(new_table);
 		FuncNode* func = (FuncNode*)sym->getNode();
 		std::vector<FuncArgNode*> argDefs = func->getArgs();
 		if (argDefs.size() != mArgs.size())
@@ -42,6 +44,8 @@ ExprResult FunCallNode::eval()
 		}
 		// Executar eval no corpo da função
 		result = func->getBody()->eval();
+		areg->pop();
+		delete new_table;
 	}
 	else
 	{
