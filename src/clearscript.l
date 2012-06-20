@@ -5,8 +5,11 @@
 %x STRING
 
 %{
+	#include <string>
 	// Declarações
+	// Escape de string
 	bool escape = false;
+
 %}
 
 %%
@@ -18,24 +21,20 @@
 <COMMENT><<EOF>> {printf("Comentário não terminado. Linha: %d.\n", yylineno); return 0;}
 "//".*\n
  /* Modificadores */
-"public" {return MOD_PUBLIC;}
-"protected" {return MOD_PROTECTED;}
+"public" {return PUBLIC;}
+"protected" {return PROTECTED;}
 "class" {return CLASS;}
 "method" {return METHOD;}
+"function" {return FUNCTION;}
 "constructor" {return CONSTRUCTOR;}
 "does" {return DOES;}
- /* Número sem sinal */
-"unsigned" {return UNSIGNED;}
  /* Estruturas de controle e laço */
 "if" {return IF;}
 "else" {return ELSE;}
 "while" {return WHILE;}
 "do" {return DO;}
  /* Tipos primitivos */
-"char" {return T_CHAR;}
-"byte" {return T_BYTE;}
 "int" {return T_INTEGER;}
-"short" {return T_SHORT;}
 "long" {return T_LONG;}
 "float" {return T_FLOAT;}
 "double" {return T_DOUBLE;}
@@ -55,7 +54,9 @@
 "+" |
 "-" |
 "/" |
-"*" {return yytext[0];}
+"*" |
+// Operador de atribuiçao
+"=" {return yytext[0];}
 "||" {return OR;}
 "&&" {return AND;}
 "<" {return LT;}
@@ -63,34 +64,35 @@
 "<=" {return LT_OR_EQ;}
 ">=" {return GT_OR_EQ;}
 "==" {return EQUALS;}
-"=" {return ATTRIBUTION;}
  /* Identificadores */
  /* @TODO Character Name, página 58 */
-[_a-zA-Z][_a-zA-Z0-9]* {/* @TODO Identificador */}
+[_a-zA-Z][_a-zA-Z0-9]* { yylval.s = yyval; }
  /* Strings */
-"\"" {BEGIN(STRING); /* @TODO Início string */}
+"\"" {BEGIN(STRING); yylval.s = ""; }
 <STRING>"\\" {
 	if (escape) {
-		/* @TODO Adiciona / ao resultado */
+		yylval.s += yytext[0];
 	}
 	escape = !escape;
 }
+<STRING>"n" {
+	if (escape) {
+		yylval.s += "\n";
+	}
+}
 <STRING>"\"" {
 	if (escape) {
-		/* @TODO Adiciona " ao resultado */
+		yylval.s += yytext[0];
 		escape = false;
 	} else {
 		/* @TODO Fim da string */
 		BEGIN(INITIAL);
 	}
 }
-<STRING>. {/* @TODO adiciona à string */}
+<STRING>. { yylval.s += yytext[0]; }
  /* Constantes numéricas */
-[0-9]+ { /* @TODO armazenar número */ return INTEGER_CONST;}
- /* @TODO Integer Length, página 58 */
-[0-9]*\.[0-9]+ { /* @TODO armazenar número */ return FLOAT_CONST; }
- /* @TODO Float Exponent, página 58 */
- /* @TODO Hex float, página 61 */
+[0-9]+ { yylval.i = std::atoi(yytext); return INTEGER_CONST;}
+[0-9]*\.[0-9]+ { yylval.f = std::atof(yytext); return FLOAT_CONST; }
  /* Ignora restante */
 .|\n {}
 
