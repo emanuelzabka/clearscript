@@ -6,11 +6,14 @@
 
 %{
 	#include <string>
+	#include "include/CondNode.h"
 	// Declarações
 	// Escape de string
 	bool escape = false;
 
 %}
+
+EXP ([Ee][-+]?[0-9]+)
 
 %%
  /* Comentários. Criados com estados para não haver problemas com buffer de
@@ -39,6 +42,7 @@
 "float" {return T_FLOAT;}
 "double" {return T_DOUBLE;}
 "bool" {return T_BOOLEAN;}
+"string" { return T_STRING; }
  /* Delimitadores de início e fim */
 ";" |
 "," |
@@ -59,13 +63,13 @@
 "=" {return yytext[0];}
 "||" {return OR;}
 "&&" {return AND;}
-"<" {return LT;}
-">" {return GT;}
-"<=" {return LT_OR_EQ;}
-">=" {return GT_OR_EQ;}
-"==" {return EQUALS;}
+"<" {  yylval.cmp = CT_LT;  return CMP;}
+">" { yylval.cmp = CT_GT; return CMP;}
+"<=" { yylval.cmp = CT_LTE; return CMP;}
+">=" { yylval.cmp = CT_GTE; return CMP;}
+"==" { yylval.cmp = CT_EQUAL return CMP;}
+"!=" { yylval.cmp = CT_NEQUAL; return CMP; }
  /* Identificadores */
- /* @TODO Character Name, página 58 */
 [_a-zA-Z][_a-zA-Z0-9]* { yylval.s = yyval; }
  /* Strings */
 "\"" {BEGIN(STRING); yylval.s = ""; }
@@ -87,12 +91,14 @@
 	} else {
 		/* @TODO Fim da string */
 		BEGIN(INITIAL);
+		return STRING;
 	}
 }
 <STRING>. { yylval.s += yytext[0]; }
  /* Constantes numéricas */
 [0-9]+ { yylval.i = std::atoi(yytext); return INTEGER_CONST;}
-[0-9]*\.[0-9]+ { yylval.f = std::atof(yytext); return FLOAT_CONST; }
+[0-9]+"."[0-9]*{EXP}? 
+"."?[0-9]+{EXP}? {yylval.f = std::atof(yytext); return FLOAT_CONST; }
  /* Ignora restante */
 .|\n {}
 
