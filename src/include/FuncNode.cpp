@@ -1,5 +1,5 @@
 #include "FuncNode.h"
-#include "ActivityReg.h"
+#include "ActivationReg.h"
 #include "SymbolTable.h"
 #include "Symbol.h"
 
@@ -29,7 +29,7 @@ AstNode* FuncNode::getBody()
 ExprResult FuncNode::eval()
 {
 	ExprResult result;
-	ActivityReg* areg = ActivityReg::getInstance();
+	ActivationReg* areg = ActivationReg::getInstance();
 	SymbolTable* table = areg->global();
 	Symbol* sym = new Symbol(mName, "function");
 	sym->setNode(this);

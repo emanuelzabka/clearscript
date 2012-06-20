@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include "IdentifierNode.h"
-#include "ActivityReg.h"
+#include "ActivationReg.h"
 #include "SymbolTable.h"
 #include "Symbol.h"
 
@@ -12,7 +12,7 @@ IdentifierNode::IdentifierNode(std::string name)
 ExprResult IdentifierNode::eval()
 {
 	ExprResult result;
-	ActivityReg* areg = ActivityReg::getInstance();
+	ActivationReg* areg = ActivationReg::getInstance();
 	SymbolTable* table = areg->top();
 	Symbol* sym = table->get(mName);
 	if (sym != NULL && sym->isVar())
@@ -32,7 +32,7 @@ ExprResult IdentifierNode::eval()
 
 Symbol* IdentifierNode::getSymbol()
 {
-	ActivityReg* areg = ActivityReg::getInstance();
+	ActivationReg* areg = ActivationReg::getInstance();
 	SymbolTable* table = areg->top();
 	Symbol* sym = table->get(mName);
 	if (sym->isVar())

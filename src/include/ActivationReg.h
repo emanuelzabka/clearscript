@@ -4,13 +4,13 @@
 #include <string>
 #include "SymbolTable.h"
 
-class ActivityReg {
+class ActivationReg {
 	protected:
 		std::vector<SymbolTable*> mTables;
-		static ActivityReg* mInstance;
-		ActivityReg();
+		static ActivationReg* mInstance;
+		ActivationReg();
 	public:
-		static ActivityReg* getInstance();
+		static ActivationReg* getInstance();
 		void push(SymbolTable* table);
 		void pop();
 		SymbolTable* top();

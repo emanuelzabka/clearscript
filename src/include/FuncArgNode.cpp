@@ -1,5 +1,5 @@
 #include "FuncArgNode.h"
-#include "ActivityReg.h"
+#include "ActivationReg.h"
 
 FuncArgNode::FuncArgNode(std::string name, std::string type)
 {
@@ -20,7 +20,7 @@ std::string FuncArgNode::getType()
 ExprResult FuncArgNode::eval()
 {
 	ExprResult result;
-	ActivityReg* areg = ActivityReg::getInstance();
+	ActivationReg* areg = ActivationReg::getInstance();
 	SymbolTable* table = areg->top();
 	table->add(new Symbol(mName, mType));
 	return result;

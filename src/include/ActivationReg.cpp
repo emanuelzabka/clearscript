@@ -1,43 +1,43 @@
-#include "ActivityReg.h"
+#include "ActivationReg.h"
 
-ActivityReg* ActivityReg::mInstance = NULL;
+ActivationReg* ActivationReg::mInstance = NULL;
 
-ActivityReg::ActivityReg()
+ActivationReg::ActivationReg()
 {
 	// Cria escopo global geral por padrão
 	push(new SymbolTable());
 }
 
-void ActivityReg::push(SymbolTable* table)
+void ActivationReg::push(SymbolTable* table)
 {
 	mTables.push_back(table);
 }
 
-void ActivityReg::pop()
+void ActivationReg::pop()
 {
 	mTables.pop_back();
 }
 
-SymbolTable* ActivityReg::top()
+SymbolTable* ActivationReg::top()
 {
 	return mTables.back();
 }
 
-SymbolTable* ActivityReg::global()
+SymbolTable* ActivationReg::global()
 {
 	return mTables.front();
 }
 
-ActivityReg* ActivityReg::getInstance()
+ActivationReg* ActivationReg::getInstance()
 {
 	if (!mInstance)
 	{
-		mInstance = new ActivityReg();
+		mInstance = new ActivationReg();
 	}
 	return mInstance;
 }
 
-Symbol* ActivityReg::getUserType(std::string type)
+Symbol* ActivationReg::getUserType(std::string type)
 {
 	// Tipos são guardados sempre na tabela de símbolos global
 	SymbolTable* table = mTables.front();
@@ -49,7 +49,7 @@ Symbol* ActivityReg::getUserType(std::string type)
 	return NULL;
 }
 
-bool ActivityReg::isBuiltinType(std::string type)
+bool ActivationReg::isBuiltinType(std::string type)
 {
 	return
 		type == "string" ||
