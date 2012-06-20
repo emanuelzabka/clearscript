@@ -27,6 +27,7 @@ class Symbol {
 		std::string getType();
 		void setType(std::string type);
 		void setNode(AstNode* node);
+		AstNode* getNode();
 		Val* getValue();
 		void setValue(Val* value);
 		void setValue(IntVal* value);

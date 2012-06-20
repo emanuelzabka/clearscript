@@ -11,6 +11,21 @@ FuncNode::FuncNode(std::string name, std::string type, std::vector<FuncArgNode*>
 	mBody = body;
 }
 
+std::string FuncNode::getType()
+{
+	return mType;
+}
+
+std::vector<FuncArgNode*>& FuncNode::getArgs()
+{
+	return mArgs;
+}
+
+AstNode* FuncNode::getBody()
+{
+	return mBody;
+}
+
 ExprResult FuncNode::eval()
 {
 	ExprResult result;

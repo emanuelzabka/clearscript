@@ -75,6 +75,11 @@ void Symbol::setNode(AstNode* node)
 	mNode = node;
 }
 
+AstNode* Symbol::getNode()
+{
+	return mNode;
+}
+
 void Symbol::setType(std::string type)
 {
 	mType = type;

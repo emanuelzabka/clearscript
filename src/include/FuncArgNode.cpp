@@ -7,6 +7,16 @@ FuncArgNode::FuncArgNode(std::string name, std::string type)
 	mType = type;
 }
 
+std::string FuncArgNode::getName()
+{
+	return mName;
+}
+
+std::string FuncArgNode::getType()
+{
+	return mType;
+}
+
 ExprResult FuncArgNode::eval()
 {
 	ExprResult result;
