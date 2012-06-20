@@ -59,7 +59,7 @@ EXP ([Ee][-+]?[0-9]+)
 "-" |
 "/" |
 "*" |
-// Operador de atribuiçao
+ /* Operador de atribuiçao */
 "=" {return yytext[0];}
 "||" {return OR;}
 "&&" {return AND;}
