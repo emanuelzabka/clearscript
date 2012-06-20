@@ -4,7 +4,11 @@
 #include "AstNode.h"
 
 enum BuiltinFunction {
-	BF_PRINT
+	BF_PRINT,
+	BF_SUBSTRING,
+	BF_EXIT,
+	BF_TOSTRING,
+	BF_TONUMBER
 };
 
 class BuiltinFunCallNode: public AstNode {
@@ -12,6 +16,10 @@ class BuiltinFunCallNode: public AstNode {
 		BuiltinFunction mType;
 		std::vector<AstNode*> mArgs;
 		void evalPrint(ExprResult& res);
+		void evalSubstring(ExpResult& res);
+		void evalExit(ExprResult& res);
+		void evalToString(ExprResult& res);
+		void evalToNumber(ExprResult& res);
 	public:
 		BuiltinFunCallNode(BuiltinFunction type, std::vector<AstNode*> args);
 		ExprResult eval();

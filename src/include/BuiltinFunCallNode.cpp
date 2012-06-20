@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "BuiltinFunCallNode.h"
 #include "IntVal.h"
 #include "LongVal.h"
@@ -6,6 +7,7 @@
 #include "DoubleVal.h"
 #include "BoolVal.h"
 #include "StringVal.h"
+#include "Log.h"
 
 BuiltinFunCallNode::BuiltinFunCallNode(BuiltinFunction type, std::vector<AstNode*> args)
 {
@@ -50,6 +52,20 @@ void BuiltinFunCallNode::evalPrint(ExprResult& res)
 	}
 }
 
+void BuiltinFunCallNode::evalSubstring(ExprResult& res)
+{
+}
+
+void BuiltinFunCallNode::evalExit(ExprResult& res)
+{
+}
+
+void BuiltinFunCallNode::evalToString(ExprResult& res)
+{
+}
+
+void BuiltinFunCallNode::evalToNumber(ExprResult& res);
+
 ExprResult BuiltinFunCallNode::eval()
 {
 	ExprResult result;
@@ -58,6 +74,20 @@ ExprResult BuiltinFunCallNode::eval()
 		case BF_PRINT:
 			evalPrint(result);
 			break;
+		case BF_SUBSTRING:
+			evalSubstring(result);
+			break;
+		case BF_EXIT:
+			evalExit(result);
+			break;
+		case BF_TOSTRING:
+			evalToString(result);
+			break;
+		case BF_TONUMBER:
+			evalToNumber(result);
+			break;
+		default:
+			Log::fatal("Função não definida");
 	}
 	return result;
 }
