@@ -13,6 +13,7 @@ class FuncNode: public AstNode {
 		AstNode* mBody;
 	public:
 		FuncNode(std::string name, std::string type, std::vector<FuncArgNode*> args, AstNode* body);
+		~FuncNode();
 		std::string getName();
 		std::string getType();
 		std::vector<FuncArgNode*>& getArgs();

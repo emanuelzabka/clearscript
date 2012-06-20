@@ -10,6 +10,14 @@ Symbol::Symbol(std::string name, std::string type)
 	mVar = false;
 }
 
+Symbol::~Symbol()
+{
+	if (mValue != NULL)
+	{
+		delete mValue;
+	}
+}
+
 Symbol::Symbol(std::string name, std::string type, bool var)
 {
 	mName = name;

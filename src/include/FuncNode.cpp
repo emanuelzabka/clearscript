@@ -11,6 +11,14 @@ FuncNode::FuncNode(std::string name, std::string type, std::vector<FuncArgNode*>
 	mBody = body;
 }
 
+FuncNode::~FuncNode()
+{
+	for (int i = 0; i < mArgs.size(); i++)
+	{
+		delete mArgs[i];
+	}
+}
+
 std::string FuncNode::getType()
 {
 	return mType;

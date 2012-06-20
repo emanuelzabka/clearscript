@@ -47,11 +47,11 @@
 %token CONSTRUCTOR
 %token DOES
 %token T_INTEGER
-%token T_LONG;
-%token T_FLOAT;
-%token T_DOUBLE;
-%token T_BOOLEAN;
-%token T_STRING;
+%token T_LONG
+%token T_FLOAT
+%token T_DOUBLE
+%token T_BOOLEAN
+%token T_STRING
 
 %nonassoc <cmp> CMP
 %right '='

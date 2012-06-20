@@ -8,6 +8,7 @@ class FunCallNode: public AstNode {
 		std::vector<AstNode*> mArgs;
 	public:
 		FunCallNode(std::string name, std::vector<AstNode*> args);
+		~FunCallNode();
 		ExprResult eval();
 };
 

@@ -9,8 +9,8 @@ class SymbolTable {
 		std::map<std::string, Symbol*> mSymbols;
 	public:
 		SymbolTable();
-		SymbolTable(SymbolTable* parent);
 		~SymbolTable();
+		SymbolTable(SymbolTable* parent);
 
 		void add(Symbol* symbol);
 		Symbol* get(std::string name);

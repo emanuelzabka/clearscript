@@ -8,6 +8,14 @@ ActivationReg::ActivationReg()
 	push(new SymbolTable());
 }
 
+ActivationReg::~ActivationReg()
+{
+	for (int i = 0; mTables.size(); i++)
+	{
+		delete mTables[i];
+	}
+}
+
 void ActivationReg::push(SymbolTable* table)
 {
 	mTables.push_back(table);

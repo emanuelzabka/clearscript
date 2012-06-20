@@ -13,6 +13,14 @@ FunCallNode::FunCallNode(std::string name, std::vector<AstNode*> args)
 	mArgs = args;
 }
 
+FunCallNode::~FunCallNode()
+{
+	for (int i = 0; i < mArgs.size(); i++)
+	{
+		delete mArgs[i];
+	}
+}
+
 ExprResult FunCallNode::eval()
 {
 	ExprResult result;

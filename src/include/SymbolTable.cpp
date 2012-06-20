@@ -5,14 +5,17 @@ SymbolTable::SymbolTable()
 	mParent = NULL;
 }
 
+SymbolTable::~SymbolTable()
+{
+	for (int i = 0; i < mSymbols.size(); i++)
+	{
+		delete mSymbols[i];
+	}
+}
+
 SymbolTable::SymbolTable(SymbolTable* parent)
 {
 	mParent = parent;
-}
-
-SymbolTable::~SymbolTable()
-{
-	// @TODO Limpar símbolos. Verificar possíveis problemas.
 }
 
 void SymbolTable::add(Symbol* symbol)

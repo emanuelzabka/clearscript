@@ -23,6 +23,7 @@ class Symbol {
 	public:
 		Symbol(std::string name, std::string type);
 		Symbol(std::string name, std::string type, bool var);
+		~Symbol();
 		std::string getName();
 		std::string getType();
 		void setType(std::string type);

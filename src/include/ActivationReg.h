@@ -9,6 +9,7 @@ class ActivationReg {
 		std::vector<SymbolTable*> mTables;
 		static ActivationReg* mInstance;
 		ActivationReg();
+		~ActivationReg();
 	public:
 		static ActivationReg* getInstance();
 		void push(SymbolTable* table);
