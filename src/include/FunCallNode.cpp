@@ -32,6 +32,7 @@ ExprResult FunCallNode::eval()
 		// Tabela de símbolos de escopo local
 		SymbolTable* local = areg->top();
 		SymbolTable* new_table = new SymbolTable();
+		// Empilha nova tabela de símbolos no gerenciador de registros de ativação
 		areg->push(new_table);
 		FuncNode* func = (FuncNode*)sym->getNode();
 		std::vector<FuncArgNode*> argDefs = func->getArgs();
@@ -43,12 +44,13 @@ ExprResult FunCallNode::eval()
 		// Pegar parâmetros
 		for (int i = 0; i < mArgs.size(); i++)
 		{
-			// Cria entradas no registro de ativação local
+			// Cria entradas no registro de ativação local à função
 			argDefs[i]->eval();
 			// Calcula valor para argumento
 			ExprResult argValue = mArgs[i]->eval();
-			// Seta valor do símbolo na tabela local
-			local->get(argDefs[i]->getName())->setValue(argValue.getType(), argValue.getValue());
+			// Seta valor do símbolo na tabela local à função
+			new_table->get(argDefs[i]->getName())
+				->setValue(argValue.getType(), argValue.getValue());
 		}
 		// Executar eval no corpo da função
 		result = func->getBody()->eval();
