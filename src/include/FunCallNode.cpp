@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <vector>
 #include "FunCallNode.h"
 #include "ActivationReg.h"
@@ -6,6 +5,7 @@
 #include "FuncNode.h"
 #include "FuncArgNode.h"
 #include "SymbolTable.h"
+#include "Log.h"
 
 FunCallNode::FunCallNode(std::string name, std::vector<AstNode*> args)
 {
@@ -38,8 +38,7 @@ ExprResult FunCallNode::eval()
 		std::vector<FuncArgNode*> argDefs = func->getArgs();
 		if (argDefs.size() != mArgs.size())
 		{
-			// @TODO Erro fatal, contagem incorreta de parâmetros
-			exit(1);
+			Log::fatal("Contagem incorreta de parâmetros");
 		}
 		// Pegar parâmetros
 		for (int i = 0; i < mArgs.size(); i++)
@@ -59,8 +58,7 @@ ExprResult FunCallNode::eval()
 	}
 	else
 	{
-		// @TODO Erro fatal, chamada de função não existente
-		exit(1);
+		Log::fatal("Função não definida");
 	}
 	return result;
 }

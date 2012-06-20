@@ -1,7 +1,7 @@
-#include <cstdlib>
 #include "VarDeclNode.h"
 #include "ActivationReg.h"
 #include "Symbol.h"
+#include "Log.h"
 
 
 VarDeclNode::VarDeclNode(std::string type, std::string name)
@@ -23,8 +23,7 @@ ExprResult VarDeclNode::eval()
 		}
 		else if (sym->getType() != mType)
 		{
-			// @TODO Redeclaração de variável dentro do mesmo escopo com tipos diferentes
-			exit(1);
+			Log::fatal("Variável redeclarada com tipos diferentes dentro de mesmo escopo.");
 		}
 	}
 	else
@@ -36,9 +35,7 @@ ExprResult VarDeclNode::eval()
 		}
 		else
 		{
-			// @TODO Erro fatal, tipo desconhecido
-			exit(1);
+			Log::fatal("Tipo desconhecido");
 		}
 	}
-	//@TODO Registra variável no registro de ativação atual
 }

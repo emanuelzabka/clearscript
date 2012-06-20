@@ -1,5 +1,5 @@
 #include "ModNode.h"
-#include <cstdlib>
+#include "Log.h"
 
 ModNode::ModNode(AstNode* left, AstNode* right)
 {
@@ -52,8 +52,7 @@ ExprResult ModNode::eval()
 	// Nenhuma operação pode ser realizada
 	if (result.getType() == "void")
 	{
-		// @TODO Erro fatal, valores não numéricos
-		std::exit(1);
+		Log::fatal("Uso de módulo com valores não numéricos");
 	}
 	return result;
 }

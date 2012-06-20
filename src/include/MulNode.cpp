@@ -1,5 +1,5 @@
 #include "MulNode.h"
-#include <cstdlib>
+#include "Log.h"
 
 MulNode::MulNode(AstNode* left, AstNode* right)
 {
@@ -51,8 +51,7 @@ ExprResult MulNode::eval()
 	// Nenhuma operação pode ser realizada
 	if (result.getType() == "void")
 	{
-		// @TODO Erro fatal, valores não numéricos
-		std::exit(1);
+		Log::fatal("Uso de multiplicação com tipos não numéricos");
 	}
 	return result;
 }

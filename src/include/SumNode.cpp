@@ -1,5 +1,5 @@
 #include "SumNode.h"
-#include <cstdlib>
+#include "Log.h"
 
 SumNode::SumNode(AstNode* left, AstNode* right)
 {
@@ -50,8 +50,7 @@ ExprResult SumNode::eval()
 	// Nenhuma operação pode ser realizada
 	if (result.getType() == "void")
 	{
-		// @TODO Erro fatal, valores não numéricos
-		std::exit(1);
+		Log::fatal("Uso de soma com valores não numéricos");
 	}
 	return result;
 }

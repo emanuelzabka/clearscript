@@ -1,6 +1,6 @@
-#include <cstdlib>
 #include "ConcatOpNode.h"
 #include "StringVal.h"
+#include "Log.h"
 
 ConcatOpNode::ConcatOpNode(AstNode* left, AstNode* right)
 {
@@ -23,8 +23,7 @@ ExprResult ConcatOpNode::eval()
 	}
 	else
 	{
-		// @TODO Erro fatal, uso incorreto do operador
-		exit(1);
+		Log::fatal("Uso incorreto do operador de concatenação, tipos incorretos");
 	}
 	return result;
 }

@@ -1,5 +1,5 @@
 #include <string>
-#include <cstdlib>
+#include "Log.h"
 #include "AssignNode.h"
 
 AssignNode::AssignNode(IdentifierNode* target, AstNode* value)
@@ -21,8 +21,7 @@ ExprResult AssignNode::eval()
 	}
 	else
 	{
-		// @TODO Erro fatal identificador não definido
-		exit(1);
+		Log::fatal("Identificador não definido");
 	}
 	return result;
 }

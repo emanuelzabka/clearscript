@@ -1,8 +1,8 @@
-#include <cstdlib>
 #include "IdentifierNode.h"
 #include "ActivationReg.h"
 #include "SymbolTable.h"
 #include "Symbol.h"
+#include "Log.h"
 
 IdentifierNode::IdentifierNode(std::string name)
 {
@@ -22,11 +22,8 @@ ExprResult IdentifierNode::eval()
 	}
 	else
 	{
-		// @TODO Erro fatal uso de identificador não definido
-		exit(1);
+		Log::fatal("Uso de identificador não definido");
 	}
-	// Buscar símbolo nas tabelas de símbolo
-	// Retornar seu valor com o tipo respectivo
 	return result;
 }
 

@@ -1,5 +1,5 @@
 #include "SubNode.h"
-#include <cstdlib>
+#include "Log.h"
 
 SubNode::SubNode(AstNode* left, AstNode* right)
 {
@@ -51,8 +51,7 @@ ExprResult SubNode::eval()
 	// Nenhuma operação pode ser realizada
 	if (result.getType() == "void")
 	{
-		// @TODO Erro fatal, valores não numéricos
-		std::exit(1);
+		Log::fatal("Valores não numéricos na subtração");
 	}
 	return result;
 }

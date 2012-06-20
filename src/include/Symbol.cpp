@@ -1,5 +1,5 @@
-#include <cstdlib>
 #include "Symbol.h"
+#include "Log.h"
 
 Symbol::Symbol(std::string name, std::string type)
 {
@@ -127,8 +127,7 @@ void Symbol::setValue(IntVal* value)
 	}
 	else
 	{
-		// @TODO Erro fatal, atribuição com valor incorreto
-		exit(1);
+		Log::fatal("Atribuição com tipo de valor incorreto");
 	}
 }
 
@@ -156,8 +155,7 @@ void Symbol::setValue(LongVal* value)
 	}
 	else
 	{
-		// @TODO Erro fatal, atribuição com valor incorreto
-		exit(1);
+		Log::fatal("Atribuição com tipo de valor incorreto");
 	}
 }
 
@@ -185,8 +183,7 @@ void Symbol::setValue(FloatVal* value)
 	}
 	else
 	{
-		// @TODO Erro fatal, atribuição com valor incorreto
-		exit(1);
+		Log::fatal("Atribuição com tipo de valor incorreto");
 	}
 }
 
@@ -214,8 +211,7 @@ void Symbol::setValue(DoubleVal* value)
 	}
 	else
 	{
-		// @TODO Erro fatal, atribuição com valor incorreto
-		exit(1);
+		Log::fatal("Atribuição com tipo de valor incorreto");
 	}
 }
 
@@ -243,8 +239,7 @@ void Symbol::setValue(BoolVal* value)
 	}
 	else
 	{
-		// @TODO Erro fatal, atribuição com valor incorreto
-		exit(1);
+		Log::fatal("Atribuição com tipo de valor incorreto");
 	}
 }
 
@@ -273,8 +268,7 @@ void Symbol::setValue(StringVal* value)
 	}
 	else
 	{
-		// @TODO Erro fatal, atribuição com valor incorreto
-		exit(1);
+		Log::fatal("Atribuição com tipo de valor incorreto");
 	}
 }
 
@@ -286,8 +280,7 @@ void Symbol::setValue(ObjectVal* value)
 	}
 	else
 	{
-		// @TODO Erro fatal, atribuição com valor incorreto
-		exit(1);
+		Log::fatal("Atribuição com tipo de valor incorreto");
 	}
 }
 

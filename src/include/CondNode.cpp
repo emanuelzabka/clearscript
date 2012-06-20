@@ -1,8 +1,8 @@
-#include <cstdlib>
 #include <string>
 #include "CondNode.h"
 #include "BoolVal.h"
 #include "StringVal.h"
+#include "Log.h"
 
 CondNode::CondNode(AstNode* left, AstNode* right, ConditionType type)
 {
@@ -158,8 +158,7 @@ ExprResult CondNode::eval()
 	}
 	if (result.getType() == "void")
 	{
-		// @TODO Erro fatal, tipos incopatíveis para comparação
-		exit(1);
+		Log::fatal("Tipos incompatíveis para comparação");
 	}
 	return result;
 }
