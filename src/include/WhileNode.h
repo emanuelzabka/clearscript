@@ -1,7 +1,6 @@
 #pragma once
 
 #include "AstNode.h"
-#include "ExprResult.h"
 
 class WhileNode: public AstNode {
 	protected:

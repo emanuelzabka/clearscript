@@ -1,7 +1,6 @@
 #pragma once
 
 #include "AstNode.h"
-#include "ExprResult.h"
 
 class IfNode: public AstNode {
 	protected:

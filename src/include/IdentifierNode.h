@@ -1,7 +1,6 @@
 #pragma once
 
 #include "AstNode.h"
-#include "ExprResult.h"
 #include <string>
 
 // @TODO Esse node terá de ser mudado quando implementar orientação

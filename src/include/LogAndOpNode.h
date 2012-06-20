@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CondNode.h"
-#include "ExprResult.h"
 
 class LogAndOpNode: public AstNode {
 	protected:

@@ -22,5 +22,8 @@ void SymbolTable::add(Symbol* symbol)
 
 Symbol* SymbolTable::get(std::string name)
 {
-	return mSymbols[name];
+	if (mSymbols.count(name) > 0)
+		return mSymbols[name];
+	else
+		return NULL;
 }
