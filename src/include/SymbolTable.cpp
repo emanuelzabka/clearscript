@@ -7,10 +7,8 @@ SymbolTable::SymbolTable()
 
 SymbolTable::~SymbolTable()
 {
-	for (int i = 0; i < mSymbols.size(); i++)
-	{
-		delete mSymbols[i];
-	}
+	// @TODO desalocar símbolos apropriadamente
+	mSymbols.clear();
 }
 
 SymbolTable::SymbolTable(SymbolTable* parent)

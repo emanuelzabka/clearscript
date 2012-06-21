@@ -52,20 +52,6 @@ void BuiltinFunCallNode::evalPrint(ExprResult& res)
 	}
 }
 
-void BuiltinFunCallNode::evalSubstring(ExprResult& res)
-{
-}
-
-void BuiltinFunCallNode::evalExit(ExprResult& res)
-{
-}
-
-void BuiltinFunCallNode::evalToString(ExprResult& res)
-{
-}
-
-void BuiltinFunCallNode::evalToNumber(ExprResult& res);
-
 ExprResult BuiltinFunCallNode::eval()
 {
 	ExprResult result;
@@ -74,6 +60,7 @@ ExprResult BuiltinFunCallNode::eval()
 		case BF_PRINT:
 			evalPrint(result);
 			break;
+		/*
 		case BF_SUBSTRING:
 			evalSubstring(result);
 			break;
@@ -86,6 +73,7 @@ ExprResult BuiltinFunCallNode::eval()
 		case BF_TONUMBER:
 			evalToNumber(result);
 			break;
+		*/
 		default:
 			Log::fatal("Função não definida");
 	}

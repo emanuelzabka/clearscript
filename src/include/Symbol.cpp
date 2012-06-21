@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include "Symbol.h"
 #include "Log.h"
 

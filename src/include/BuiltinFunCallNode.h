@@ -16,10 +16,12 @@ class BuiltinFunCallNode: public AstNode {
 		BuiltinFunction mType;
 		std::vector<AstNode*> mArgs;
 		void evalPrint(ExprResult& res);
-		void evalSubstring(ExpResult& res);
+		/*
+		void evalSubstring(ExprResult& res);
 		void evalExit(ExprResult& res);
 		void evalToString(ExprResult& res);
 		void evalToNumber(ExprResult& res);
+		*/
 	public:
 		BuiltinFunCallNode(BuiltinFunction type, std::vector<AstNode*> args);
 		ExprResult eval();

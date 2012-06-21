@@ -5,12 +5,17 @@
 %x STRING
 
 %{
-	#include <string>
+	extern "C"
+	{
+		int yylex(void);
+	}
+	#include <string.h>
 	#include "include/CondNode.h"
-	// Declarações
+	#include "include/BuiltinFunCallNode.h"
+	#include "clearscript.tab.h"
+
 	// Escape de string
 	bool escape = false;
-
 %}
 
 EXP ([Ee][-+]?[0-9]+)
@@ -23,6 +28,8 @@ EXP ([Ee][-+]?[0-9]+)
 <COMMENT>([^*]|\n)+|.
 <COMMENT><<EOF>> {printf("Comentário não terminado. Linha: %d.\n", yylineno); return 0;}
 "//".*\n
+"main" {return MAIN; }
+"print" { yylval.fun = BF_PRINT; return BUILTIN_FUN; }
  /* Modificadores */
 "public" {return PUBLIC;}
 "protected" {return PROTECTED;}
@@ -37,12 +44,13 @@ EXP ([Ee][-+]?[0-9]+)
 "while" {return WHILE;}
 "do" {return DO;}
  /* Tipos primitivos */
-"int" {return T_INTEGER;}
-"long" {return T_LONG;}
-"float" {return T_FLOAT;}
-"double" {return T_DOUBLE;}
-"bool" {return T_BOOLEAN;}
-"string" { return T_STRING; }
+"void" { strcpy(yylval.s, yytext); return T_VOID; }
+"int" { strcpy(yylval.s, yytext); return T_INTEGER; }
+"long" { strcpy(yylval.s, yytext); return T_LONG; }
+"float" { strcpy(yylval.s, yytext); return T_FLOAT; }
+"double" { strcpy(yylval.s, yytext); return T_DOUBLE; }
+"bool" { strcpy(yylval.s, yytext); return T_BOOLEAN; }
+"string" { strcpy(yylval.s, yytext); return T_STRING; }
  /* Delimitadores de início e fim */
 ";" |
 "," |
@@ -67,38 +75,38 @@ EXP ([Ee][-+]?[0-9]+)
 ">" { yylval.cmp = CT_GT; return CMP;}
 "<=" { yylval.cmp = CT_LTE; return CMP;}
 ">=" { yylval.cmp = CT_GTE; return CMP;}
-"==" { yylval.cmp = CT_EQUAL return CMP;}
+"==" { yylval.cmp = CT_EQUAL; return CMP;}
 "!=" { yylval.cmp = CT_NEQUAL; return CMP; }
  /* Identificadores */
-[_a-zA-Z][_a-zA-Z0-9]* { yylval.s = yyval; }
+[_a-zA-Z][_a-zA-Z0-9]* { strcpy(yylval.s, yytext); return IDENTIFIER; }
  /* Strings */
-"\"" {BEGIN(STRING); yylval.s = ""; }
+"\"" {BEGIN(STRING); yylval.s[0] = '\0'; }
 <STRING>"\\" {
 	if (escape) {
-		yylval.s += yytext[0];
+		strcat(yylval.s, "\\");
 	}
 	escape = !escape;
 }
 <STRING>"n" {
 	if (escape) {
-		yylval.s += "\n";
+		strcat(yylval.s, "\n");
+		escape = false;
 	}
 }
 <STRING>"\"" {
 	if (escape) {
-		yylval.s += yytext[0];
+		strcat(yylval.s, yytext);
 		escape = false;
 	} else {
-		/* @TODO Fim da string */
 		BEGIN(INITIAL);
-		return STRING;
+		return STRING_CONST;
 	}
 }
-<STRING>. { yylval.s += yytext[0]; }
+<STRING>. { strcat(yylval.s, yytext); }
  /* Constantes numéricas */
-[0-9]+ { yylval.i = std::atoi(yytext); return INTEGER_CONST;}
-[0-9]+"."[0-9]*{EXP}? 
-"."?[0-9]+{EXP}? {yylval.f = std::atof(yytext); return FLOAT_CONST; }
+[0-9]+ { yylval.i = atoi(yytext); return INTEGER_CONST;}
+[0-9]+"."[0-9]*{EXP}? |
+"."?[0-9]+{EXP}? {yylval.f = atof(yytext); return FLOAT_CONST; }
  /* Ignora restante */
 .|\n {}
 
