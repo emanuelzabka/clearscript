@@ -11,6 +11,7 @@
 	}
 	#include <string.h>
 	#include "include/ArgList.h"
+	#include "include/ArgDefList.h"
 	#include "include/CondNode.h"
 	#include "include/BuiltinFunCallNode.h"
 	#include "clearscript.tab.h"

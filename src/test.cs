@@ -1,3 +1,8 @@
+int soma() does {
+	print("Soma");
+}
+
+
 main does {
 	int contador;
 	contador = 10;

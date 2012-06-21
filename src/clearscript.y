@@ -64,6 +64,7 @@ extern "C"
 	BuiltinFunction fun;
 	AstNode* a;
 	ArgList* al;
+	ArgDefList* adl;
 }
 
 %token <f> FLOAT_CONST
@@ -83,6 +84,7 @@ extern "C"
 %type <s> builtin_type
 %type <a> value expr simple_declaration declaration assign if while func_call func_declaration stmt stmt_list
 %type <al> arg_list
+%type <adl> arg_def_list
 
 /* @TODO Adicionar tipo de cada nó */
 %start calclist
@@ -164,8 +166,23 @@ arg_list:
 ;
 
 func_call:
-  BUILTIN_FUN '(' arg_list ')' { /* @TODO Verificar porque valor de fun está incorreto */ $$ = new BuiltinFunCallNode(BF_PRINT, $3->get()); }
-| IDENTIFIER '(' arg_list ')' { $$ = new FunCallNode($1, $3->get()); }
+  BUILTIN_FUN '(' arg_list ')' {
+	/* @TODO Verificar porque valor de fun está incorreto */
+	std::vector<AstNode*> args;
+	if ($3 != NULL)
+	{
+		args = $3->get();
+	}
+	$$ = new BuiltinFunCallNode(BF_PRINT, args);
+}
+| IDENTIFIER '(' arg_list ')' {
+	std::vector<AstNode*> args;
+	if ($3 != NULL)
+	{
+		args = $3->get();
+	}
+	$$ = new FunCallNode($1, args);
+}
 ;
 
 if:
@@ -178,13 +195,25 @@ while:
 ;
 
 arg_def_list:
-| simple_declaration
-| simple_declaration ',' arg_def_list
+{ $$ = NULL; }
+| simple_declaration {
+	VarDeclNode* vd = (VarDeclNode*)$1;
+	$$ = new ArgDefList(new FuncArgNode(vd->getName(), vd->getType()), NULL); }
+| simple_declaration ',' arg_def_list {
+	VarDeclNode* vd = (VarDeclNode*)$1;
+	$$ = new ArgDefList(new FuncArgNode(vd->getName(), vd->getType()), $3);
+}
 ;
 
 func_declaration:
   simple_declaration '(' arg_def_list ')' DOES '{' stmt_list '}' {
-	printf("Declaração de função");
+	VarDeclNode* vd = (VarDeclNode*)$1;
+	std::vector<FuncArgNode*> args;
+	if ($3 != NULL)
+	{
+		args = $3->get();
+	}
+	$$ = new FuncNode(vd->getName(), vd->getType(), args, $7);
 }
 ;
 
