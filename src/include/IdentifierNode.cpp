@@ -26,13 +26,12 @@ ExprResult IdentifierNode::eval()
 	}
 	return result;
 }
-
 Symbol* IdentifierNode::getSymbol()
 {
 	ActivationReg* areg = ActivationReg::getInstance();
 	SymbolTable* table = areg->top();
 	Symbol* sym = table->get(mName);
-	if (sym->isVar())
+	if (sym != NULL && sym->isVar())
 	{
 		return sym;
 	}

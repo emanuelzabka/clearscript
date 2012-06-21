@@ -33,6 +33,7 @@
 #include "include/StringConstNode.h"
 #include "include/StmtListNode.h"
 #include "include/ArgList.h"
+#include "include/ArgDefList.h"
 
 extern int yylineno;
 
@@ -100,12 +101,11 @@ builtin_type:
 }
 ;
 
-
 value:
-  IDENTIFIER { $$ = new IdentifierNode(yylval.s); }
-| FLOAT_CONST { $$ = new DoubleConstNode(yylval.f); }
-| INTEGER_CONST { $$ = new LongConstNode(yylval.i); }
-| STRING_CONST { $$ = new StringConstNode(yylval.s); }
+  IDENTIFIER { $$ = new IdentifierNode($1); }
+| FLOAT_CONST { $$ = new DoubleConstNode($1); }
+| INTEGER_CONST { $$ = new LongConstNode($1); }
+| STRING_CONST { $$ = new StringConstNode($1); }
 ;
 
 

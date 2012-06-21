@@ -110,9 +110,9 @@ EXP ([Ee][-+]?[0-9]+)
 }
 <STRING>. { strcat(yylval.s, yytext); }
  /* Constantes numéricas */
-[0-9]+ { yylval.i = atoi(yytext); return INTEGER_CONST;}
-[0-9]+"."[0-9]*{EXP}? |
-"."?[0-9]+{EXP}? {yylval.f = atof(yytext); return FLOAT_CONST; }
+-?[0-9]+ { yylval.i = atoi(yytext); return INTEGER_CONST;}
+-?[0-9]+"."[0-9]*{EXP}? |
+-?"."?[0-9]+{EXP}? {yylval.f = atof(yytext); return FLOAT_CONST; }
  /* Ignora restante */
 .|\n {}
 
