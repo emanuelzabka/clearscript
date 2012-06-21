@@ -2,6 +2,8 @@
 #include "Symbol.h"
 #include "Log.h"
 
+#include <stdio.h>
+
 Symbol::Symbol(std::string name, std::string type)
 {
 	mName = name;
@@ -247,7 +249,11 @@ void Symbol::setValue(BoolVal* value)
 void Symbol::setValue(StringVal* value)
 {
 	std::string str = value->getValue();
-	if (mType == "int")
+	if (mType == "string")
+	{
+		((StringVal*)mValue)->setValue(str);
+	}
+	else if (mType == "int")
 	{
 		((IntVal*)mValue)->setValue(std::atoi(str.c_str()));
 	}

@@ -4,7 +4,7 @@
 #include "AstNode.h"
 
 enum BuiltinFunction {
-	BF_PRINT,
+	BF_PRINT = 1,
 	BF_SUBSTRING,
 	BF_EXIT,
 	BF_TOSTRING,

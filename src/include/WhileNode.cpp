@@ -11,7 +11,10 @@ ExprResult WhileNode::eval()
 	ExprResult result;
 	while (mCond->eval().getBoolVal())
 	{
-		mBody->eval();
+		if (mBody != NULL)
+		{
+			mBody->eval();
+		}
 	}
 	return result;
 }

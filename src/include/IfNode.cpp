@@ -13,7 +13,10 @@ ExprResult IfNode::eval()
 	ExprResult cond = mCond->eval();
 	if (cond.getBoolVal())
 	{
-		mThenBody->eval();
+		if (mThenBody != NULL)
+		{
+			mThenBody->eval();
+		}
 	}
 	else if (mElseBody != NULL)
 	{

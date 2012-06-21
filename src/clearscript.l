@@ -10,6 +10,7 @@
 		int yylex(void);
 	}
 	#include <string.h>
+	#include "include/ArgList.h"
 	#include "include/CondNode.h"
 	#include "include/BuiltinFunCallNode.h"
 	#include "clearscript.tab.h"
@@ -69,14 +70,15 @@ EXP ([Ee][-+]?[0-9]+)
 "*" |
  /* Operador de atribuiçao */
 "=" {return yytext[0];}
+"++" { return CONCAT_OP; }
 "||" {return OR;}
 "&&" {return AND;}
-"<" {  yylval.cmp = CT_LT;  return CMP;}
-">" { yylval.cmp = CT_GT; return CMP;}
-"<=" { yylval.cmp = CT_LTE; return CMP;}
-">=" { yylval.cmp = CT_GTE; return CMP;}
-"==" { yylval.cmp = CT_EQUAL; return CMP;}
-"!=" { yylval.cmp = CT_NEQUAL; return CMP; }
+"<" {  yylval.cmp = (int)CT_LT;  return CMP;}
+">" { yylval.cmp = (int)CT_GT; return CMP;}
+"<=" { yylval.cmp = (int)CT_LTE; return CMP;}
+">=" { yylval.cmp = (int)CT_GTE; return CMP;}
+"==" { yylval.cmp = (int)CT_EQUAL; return CMP;}
+"!=" { yylval.cmp = (int)CT_NEQUAL; return CMP; }
  /* Identificadores */
 [_a-zA-Z][_a-zA-Z0-9]* { strcpy(yylval.s, yytext); return IDENTIFIER; }
  /* Strings */
@@ -91,6 +93,10 @@ EXP ([Ee][-+]?[0-9]+)
 	if (escape) {
 		strcat(yylval.s, "\n");
 		escape = false;
+	}
+	else
+	{
+		strcat(yylval.s, yytext);
 	}
 }
 <STRING>"\"" {

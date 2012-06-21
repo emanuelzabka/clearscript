@@ -8,7 +8,15 @@ StmtListNode::StmtListNode(AstNode* left, AstNode* right)
 
 ExprResult StmtListNode::eval()
 {
-	mLeft->eval();
-	mRight->eval();
+	ExprResult result;
+	if (mLeft != NULL)
+	{
+		mLeft->eval();
+	}
+	if (mRight != NULL)
+	{
+		mRight->eval();
+	}
+	return result;
 }
 

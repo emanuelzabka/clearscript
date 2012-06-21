@@ -59,7 +59,7 @@ extern "C"
 	long i;
 	double f;
 	char s[4096];
-	ConditionType cmp;
+	int cmp;
 	BuiltinFunction fun;
 	AstNode* a;
 	ArgList* al;
@@ -71,7 +71,7 @@ extern "C"
 %token <s> STRING_CONST IDENTIFIER T_INTEGER T_LONG T_FLOAT T_DOUBLE T_BOOLEAN T_STRING T_VOID
 %token IF DO ELSE WHILE
 %token AND OR
-%token MAIN PUBLIC PROTECTED CLASS METHOD FUNCTION CONSTRUCTOR DOES
+%token MAIN PUBLIC PROTECTED CLASS METHOD FUNCTION CONSTRUCTOR DOES CONCAT_OP
 
 %nonassoc <cmp> CMP
 %right '='
@@ -110,17 +110,18 @@ value:
 
 
 expr:
-  value
+  value { $$ = $1; }
 | expr '+' expr { $$ = new SumNode($1, $3); }
 | expr '-' expr { $$ = new SubNode($1, $3); }
 | expr '/' expr { $$ = new DivNode($1, $3); }
 | expr '%' expr { $$ = new ModNode($1, $3); }
 | expr OR expr { $$ = new LogOrOpNode($1, $3); }
 | expr AND expr { $$ = new LogAndOpNode($1, $3); }
-| expr CMP expr { $$ = new CondNode($1, $3, $2); }
+| expr CMP expr { $$ = new CondNode($1, $3, (ConditionType)$2); }
+| expr CONCAT_OP expr { $$ = new ConcatOpNode($1, $3); }
 | '!' expr { $$ = new LogNotOpNode($2); }
 | '(' expr ')' { $$ = $2; }
-| func_call
+| func_call { $$ = $1; }
 ;
 
 simple_declaration:
@@ -139,31 +140,32 @@ assign:
 ;
 
 declaration:
-{ /* Ignora */ }
-| simple_declaration
+{ $$ = NULL; }
+| simple_declaration { $$ = $1; }
 ;
 
 stmt:
   declaration ';' { $$ = $1; }
 | assign ';' { $$ = $1; }
-| if
-| while
-| func_call ';'
+| if { $$ = $1; }
+| while { $$ = $1; }
+| func_call ';' { $$ = $1; }
 ;
 
 stmt_list:
-{ /* Ignora */ }
+{ $$ = NULL; }
 |  stmt stmt_list { $$ = new StmtListNode($1, $2); }
 ;
 
 arg_list:
+{ $$ = NULL; }
 | expr { $$ = new ArgList($1, NULL); }
 | expr ',' arg_list { $$ = new ArgList($1, $3); }
 ;
 
 func_call:
-  BUILTIN_FUN '(' arg_list ')' { printf("Chamada de função predefinida"); }
-| IDENTIFIER '(' arg_list ')' { printf("Chamada de função"); }
+  BUILTIN_FUN '(' arg_list ')' { /* @TODO Verificar porque valor de fun está incorreto */ $$ = new BuiltinFunCallNode(BF_PRINT, $3->get()); }
+| IDENTIFIER '(' arg_list ')' { $$ = new FunCallNode($1, $3->get()); }
 ;
 
 if:
@@ -188,7 +190,7 @@ func_declaration:
 
 calclist:
 | func_declaration calclist
-| MAIN DOES '{' stmt_list '}' { /* TODO Chamar eval no stmt_list */exit(0); }
+| MAIN DOES '{' stmt_list '}' { if ($4 != NULL) { $4->eval(); } exit(0); }
 ;
 %%
 

@@ -22,6 +22,7 @@ std::string VarDeclNode::getType()
 
 ExprResult VarDeclNode::eval()
 {
+	ExprResult result;
 	ActivationReg* areg = ActivationReg::getInstance();
 	SymbolTable* table = areg->top();
 	if (areg->isBuiltinType(mType))
@@ -29,7 +30,7 @@ ExprResult VarDeclNode::eval()
 		Symbol* sym = table->get(mName);
 		if (sym == NULL)
 		{
-			table->add(new Symbol(mName, mType));
+			table->add(new Symbol(mName, mType, true));
 		}
 		else if (sym->getType() != mType)
 		{
@@ -41,11 +42,12 @@ ExprResult VarDeclNode::eval()
 		Symbol* userType = areg->getUserType(mType);
 		if (userType != NULL)
 		{
-			table->add(new Symbol(mName, mType));
+			table->add(new Symbol(mName, mType, true));
 		}
 		else
 		{
 			Log::fatal("Tipo desconhecido");
 		}
 	}
+	return result;
 }
