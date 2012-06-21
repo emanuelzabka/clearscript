@@ -74,12 +74,12 @@ EXP ([Ee][-+]?[0-9]+)
 "++" { return CONCAT_OP; }
 "||" {return OR;}
 "&&" {return AND;}
-"<" {  yylval.cmp = (int)CT_LT;  return CMP;}
-">" { yylval.cmp = (int)CT_GT; return CMP;}
-"<=" { yylval.cmp = (int)CT_LTE; return CMP;}
-">=" { yylval.cmp = (int)CT_GTE; return CMP;}
-"==" { yylval.cmp = (int)CT_EQUAL; return CMP;}
-"!=" { yylval.cmp = (int)CT_NEQUAL; return CMP; }
+"<" {  yylval.cmp = CT_LT;  return CMP;}
+">" { yylval.cmp = CT_GT; return CMP;}
+"<=" { yylval.cmp = CT_LTE; return CMP;}
+">=" { yylval.cmp = CT_GTE; return CMP;}
+"==" { yylval.cmp = CT_EQUAL; return CMP;}
+"!=" { yylval.cmp = CT_NEQUAL; return CMP; }
  /* Identificadores */
 [_a-zA-Z][_a-zA-Z0-9]* { strcpy(yylval.s, yytext); return IDENTIFIER; }
  /* Strings */

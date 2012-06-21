@@ -60,7 +60,7 @@ extern "C"
 	long i;
 	double f;
 	char s[4096];
-	int cmp;
+	ConditionType cmp;
 	BuiltinFunction fun;
 	AstNode* a;
 	ArgList* al;
@@ -119,7 +119,7 @@ expr:
 | expr '%' expr { $$ = new ModNode($1, $3); }
 | expr OR expr { $$ = new LogOrOpNode($1, $3); }
 | expr AND expr { $$ = new LogAndOpNode($1, $3); }
-| expr CMP expr { $$ = new CondNode($1, $3, (ConditionType)$2); }
+| expr CMP expr { $$ = new CondNode($1, $3, $2); }
 | expr CONCAT_OP expr { $$ = new ConcatOpNode($1, $3); }
 | '!' expr { $$ = new LogNotOpNode($2); }
 | '(' expr ')' { $$ = $2; }
@@ -167,21 +167,20 @@ arg_list:
 
 func_call:
   BUILTIN_FUN '(' arg_list ')' {
-	/* @TODO Verificar porque valor de fun está incorreto */
-	std::vector<AstNode*> args;
+	std::vector<AstNode*>* args = new std::vector<AstNode*>;
 	if ($3 != NULL)
 	{
-		args = $3->get();
+		*args = $3->get();
 	}
-	$$ = new BuiltinFunCallNode(BF_PRINT, args);
+	$$ = new BuiltinFunCallNode($1, *args);
 }
 | IDENTIFIER '(' arg_list ')' {
-	std::vector<AstNode*> args;
+	std::vector<AstNode*>* args = new std::vector<AstNode*>;
 	if ($3 != NULL)
 	{
-		args = $3->get();
+		*args = $3->get();
 	}
-	$$ = new FunCallNode($1, args);
+	$$ = new FunCallNode($1, *args);
 }
 ;
 
@@ -214,6 +213,8 @@ func_declaration:
 		args = $3->get();
 	}
 	$$ = new FuncNode(vd->getName(), vd->getType(), args, $7);
+	// Executa a declaração de fato
+	$$->eval();
 }
 ;
 

@@ -26,6 +26,7 @@ ExprResult IdentifierNode::eval()
 	}
 	return result;
 }
+
 Symbol* IdentifierNode::getSymbol()
 {
 	ActivationReg* areg = ActivationReg::getInstance();

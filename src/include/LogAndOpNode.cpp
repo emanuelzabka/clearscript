@@ -12,4 +12,5 @@ ExprResult LogAndOpNode::eval()
 	ExprResult left = mLeft->eval();
 	ExprResult right = mRight->eval();
 	ExprResult result("bool", (Val*)new BoolVal(left.getBoolVal() && right.getBoolVal()));
+	return result;
 }
