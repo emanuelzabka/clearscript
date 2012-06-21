@@ -1,8 +1,7 @@
-#include <cstdlib>
 #include "LogOrOpNode.h"
 #include "BoolVal.h"
 
-LogOrOpNode::LogOrOpNode(CondNode* left, CondNode* right)
+LogOrOpNode::LogOrOpNode(AstNode* left, AstNode* right)
 {
 	mLeft = left;
 	mRight = right;

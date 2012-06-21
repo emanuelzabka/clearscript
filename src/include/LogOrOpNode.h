@@ -1,13 +1,13 @@
 #pragma once
 
-#include "CondNode.h"
+#include "AstNode.h"
 
 class LogOrOpNode: public AstNode {
 	protected:
-		CondNode* mLeft;
-		CondNode* mRight;
+		AstNode* mLeft;
+		AstNode* mRight;
 	public:
-		LogOrOpNode(CondNode* left, CondNode* right);
+		LogOrOpNode(AstNode* left, AstNode* right);
 		ExprResult eval();
 };
 

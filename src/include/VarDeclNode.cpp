@@ -10,6 +10,16 @@ VarDeclNode::VarDeclNode(std::string type, std::string name)
 	mName = name;
 }
 
+std::string VarDeclNode::getName()
+{
+	return mName;
+}
+
+std::string VarDeclNode::getType()
+{
+	return mType;
+}
+
 ExprResult VarDeclNode::eval()
 {
 	ActivationReg* areg = ActivationReg::getInstance();

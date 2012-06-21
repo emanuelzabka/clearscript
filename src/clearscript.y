@@ -28,6 +28,11 @@
 #include "include/SumNode.h"
 #include "include/VarDeclNode.h"
 #include "include/WhileNode.h"
+#include "include/LongConstNode.h"
+#include "include/DoubleConstNode.h"
+#include "include/StringConstNode.h"
+#include "include/StmtListNode.h"
+#include "include/ArgList.h"
 
 extern int yylineno;
 
@@ -57,6 +62,7 @@ extern "C"
 	ConditionType cmp;
 	BuiltinFunction fun;
 	AstNode* a;
+	ArgList* al;
 }
 
 %token <f> FLOAT_CONST
@@ -74,7 +80,8 @@ extern "C"
 %nonassoc '!'
 
 %type <s> builtin_type
-%type <a> value expr simple_declaration assign if while func_call func_declaration
+%type <a> value expr simple_declaration declaration assign if while func_call func_declaration stmt stmt_list
+%type <al> arg_list
 
 /* @TODO Adicionar tipo de cada nó */
 %start calclist
@@ -95,63 +102,63 @@ builtin_type:
 
 
 value:
-  IDENTIFIER
-| FLOAT_CONST
-| INTEGER_CONST
-| STRING_CONST
+  IDENTIFIER { $$ = new IdentifierNode(yylval.s); }
+| FLOAT_CONST { $$ = new DoubleConstNode(yylval.f); }
+| INTEGER_CONST { $$ = new LongConstNode(yylval.i); }
+| STRING_CONST { $$ = new StringConstNode(yylval.s); }
 ;
 
 
 expr:
   value
-| expr '+' expr
-| expr '-' expr
-| expr '/' expr
-| expr '%' expr
-| expr OR expr
-| expr AND expr
-| expr CMP expr
-| '!' expr
-| '(' expr ')'
+| expr '+' expr { $$ = new SumNode($1, $3); }
+| expr '-' expr { $$ = new SubNode($1, $3); }
+| expr '/' expr { $$ = new DivNode($1, $3); }
+| expr '%' expr { $$ = new ModNode($1, $3); }
+| expr OR expr { $$ = new LogOrOpNode($1, $3); }
+| expr AND expr { $$ = new LogAndOpNode($1, $3); }
+| expr CMP expr { $$ = new CondNode($1, $3, $2); }
+| '!' expr { $$ = new LogNotOpNode($2); }
+| '(' expr ')' { $$ = $2; }
 | func_call
 ;
 
 simple_declaration:
  builtin_type IDENTIFIER {
-	printf("Declaração tipo predefinido: %s %s\n", $1, $2);
+	$$ = new VarDeclNode($1, $2);
 }
 | IDENTIFIER IDENTIFIER {
-	printf("Declaração: %s %s\n", $1, $2);
-}
-;
-
-assign_declaration:
-  simple_declaration '=' expr {
- 	printf("Atribuição com valor");
+	$$ = new VarDeclNode($1, $2);
 }
 ;
 
 assign:
-	IDENTIFIER '=' expr { printf("Atribuição"); }
+  IDENTIFIER '=' expr {
+	$$ = new AssignNode(new IdentifierNode($1), $3);
+}
 ;
 
 declaration:
-| assign_declaration
+{ /* Ignora */ }
 | simple_declaration
 ;
 
 stmt:
-  declaration ';'
-| assign ';'
-| '{' op_stmt '}'
+  declaration ';' { $$ = $1; }
+| assign ';' { $$ = $1; }
 | if
 | while
 | func_call ';'
 ;
 
+stmt_list:
+{ /* Ignora */ }
+|  stmt stmt_list { $$ = new StmtListNode($1, $2); }
+;
+
 arg_list:
-| expr
-| expr ',' arg_list
+| expr { $$ = new ArgList($1, NULL); }
+| expr ',' arg_list { $$ = new ArgList($1, $3); }
 ;
 
 func_call:
@@ -159,17 +166,13 @@ func_call:
 | IDENTIFIER '(' arg_list ')' { printf("Chamada de função"); }
 ;
 
-op_stmt:
-| stmt
-;
-
 if:
-  IF '(' expr ')' DO stmt
-| IF '(' expr ')' DO stmt ELSE stmt
+  IF '(' expr ')' DO '{' stmt_list '}' { $$ = new IfNode($3, $7, NULL); }
+| IF '(' expr ')' DO '{' stmt_list '}' ELSE '{' stmt_list '}' { $$ = new IfNode($3, $7, $11); }
 ;
 
 while:
-  WHILE '(' expr ')' DO stmt
+  WHILE '(' expr ')' DO '{' stmt_list '}' { $$ = new WhileNode($3, $7); }
 ;
 
 arg_def_list:
@@ -178,18 +181,14 @@ arg_def_list:
 ;
 
 func_declaration:
-  simple_declaration '(' arg_def_list ')' DOES '{' func_body '}' {
+  simple_declaration '(' arg_def_list ')' DOES '{' stmt_list '}' {
 	printf("Declaração de função");
 }
 ;
 
-func_body:
-| stmt func_body
-;
-
 calclist:
 | func_declaration calclist
-| MAIN DOES '{' func_body '}' { /* TODO Chamar eval no func_body*/exit(0); }
+| MAIN DOES '{' stmt_list '}' { /* TODO Chamar eval no stmt_list */exit(0); }
 ;
 %%
 

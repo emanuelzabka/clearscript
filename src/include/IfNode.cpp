@@ -15,7 +15,7 @@ ExprResult IfNode::eval()
 	{
 		mThenBody->eval();
 	}
-	else
+	else if (mElseBody != NULL)
 	{
 		mElseBody->eval();
 	}

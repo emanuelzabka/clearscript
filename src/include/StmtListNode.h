@@ -2,12 +2,12 @@
 
 #include "AstNode.h"
 
-class LogAndOpNode: public AstNode {
+class StmtListNode: public AstNode {
 	protected:
 		AstNode* mLeft;
 		AstNode* mRight;
 	public:
-		LogAndOpNode(AstNode* left, AstNode* right);
+		StmtListNode(AstNode* left, AstNode* right);
 		ExprResult eval();
 };
 
