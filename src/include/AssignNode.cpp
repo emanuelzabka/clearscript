@@ -21,7 +21,8 @@ ExprResult AssignNode::eval()
 	}
 	else
 	{
-		Log::fatal("Identificador não definido");
+		std::string error = "Identificador <" + mTarget->getName() + "> não definido";
+		Log::fatal(error);
 	}
 	return result;
 }

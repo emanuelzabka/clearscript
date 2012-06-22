@@ -22,6 +22,6 @@ ExprResult FuncArgNode::eval()
 	ExprResult result;
 	ActivationReg* areg = ActivationReg::getInstance();
 	SymbolTable* table = areg->top();
-	table->add(new Symbol(mName, mType));
+	table->add(new Symbol(mName, mType, true));
 	return result;
 }

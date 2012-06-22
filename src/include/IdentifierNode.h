@@ -11,6 +11,7 @@ class IdentifierNode: public AstNode {
 		std::string mName;
 	public:
 		IdentifierNode(std::string name);
+		std::string getName();
 		ExprResult eval();
 		Symbol* getSymbol();
 };

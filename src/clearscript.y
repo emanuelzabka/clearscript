@@ -34,6 +34,7 @@
 #include "include/StmtListNode.h"
 #include "include/ArgList.h"
 #include "include/ArgDefList.h"
+#include "include/ReturnNode.h"
 
 extern int yylineno;
 
@@ -73,7 +74,7 @@ extern "C"
 %token <s> STRING_CONST IDENTIFIER T_INTEGER T_LONG T_FLOAT T_DOUBLE T_BOOLEAN T_STRING T_VOID
 %token IF DO ELSE WHILE
 %token AND OR
-%token MAIN PUBLIC PROTECTED CLASS METHOD FUNCTION CONSTRUCTOR DOES CONCAT_OP
+%token MAIN PUBLIC PROTECTED CLASS METHOD FUNCTION CONSTRUCTOR DOES CONCAT_OP RETURN
 
 %nonassoc <cmp> CMP
 %right '='
@@ -114,6 +115,7 @@ value:
 expr:
   value { $$ = $1; }
 | expr '+' expr { $$ = new SumNode($1, $3); }
+| expr '*' expr { $$ = new MulNode($1, $3); }
 | expr '-' expr { $$ = new SubNode($1, $3); }
 | expr '/' expr { $$ = new DivNode($1, $3); }
 | expr '%' expr { $$ = new ModNode($1, $3); }
@@ -152,6 +154,7 @@ stmt:
 | if { $$ = $1; }
 | while { $$ = $1; }
 | func_call ';' { $$ = $1; }
+| RETURN expr ';' { $$ = new ReturnNode($2); }
 ;
 
 stmt_list:
@@ -167,20 +170,20 @@ arg_list:
 
 func_call:
   BUILTIN_FUN '(' arg_list ')' {
-	std::vector<AstNode*>* args = new std::vector<AstNode*>;
+	std::vector<AstNode*> args;
 	if ($3 != NULL)
 	{
-		*args = $3->get();
+		args = $3->get();
 	}
-	$$ = new BuiltinFunCallNode($1, *args);
+	$$ = new BuiltinFunCallNode($1, args);
 }
 | IDENTIFIER '(' arg_list ')' {
-	std::vector<AstNode*>* args = new std::vector<AstNode*>;
+	std::vector<AstNode*> args;
 	if ($3 != NULL)
 	{
-		*args = $3->get();
+		args = $3->get();
 	}
-	$$ = new FunCallNode($1, *args);
+	$$ = new FunCallNode($1, args);
 }
 ;
 

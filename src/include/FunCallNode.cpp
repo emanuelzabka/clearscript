@@ -45,14 +45,26 @@ ExprResult FunCallNode::eval()
 		{
 			// Cria entradas no registro de ativação local à função
 			argDefs[i]->eval();
+			SymbolTable* p = areg->top();
+			areg->pop();
 			// Calcula valor para argumento
 			ExprResult argValue = mArgs[i]->eval();
+			areg->push(p);
 			// Seta valor do símbolo na tabela local à função
 			new_table->get(argDefs[i]->getName())
 				->setValue(argValue.getType(), argValue.getValue());
 		}
 		// Executar eval no corpo da função
-		result = func->getBody()->eval();
+		if (func->getBody() != NULL)
+		{
+			result = func->getBody()->eval();
+		}
+		Symbol* bodyRes = new_table->get("--return");
+		if (bodyRes != NULL)
+		{
+			result.setType(bodyRes->getType());
+			result.setValue(bodyRes->getValue());
+		}
 		areg->pop();
 		delete new_table;
 	}

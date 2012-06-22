@@ -39,3 +39,8 @@ Symbol* IdentifierNode::getSymbol()
 	return NULL;
 }
 
+std::string IdentifierNode::getName()
+{
+	return mName;
+}
+

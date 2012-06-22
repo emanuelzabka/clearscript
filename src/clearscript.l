@@ -32,6 +32,7 @@ EXP ([Ee][-+]?[0-9]+)
 "//".*\n
 "main" {return MAIN; }
 "print" { yylval.fun = BF_PRINT; return BUILTIN_FUN; }
+"return" { return RETURN; }
  /* Modificadores */
 "public" {return PUBLIC;}
 "protected" {return PROTECTED;}
