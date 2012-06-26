@@ -10,6 +10,7 @@ ActivationReg::ActivationReg()
 
 ActivationReg::~ActivationReg()
 {
+	// Chama destrutor para as tabelas de símbolos ainda presentes
 	for (int i = 0; mTables.size(); i++)
 	{
 		delete mTables[i];

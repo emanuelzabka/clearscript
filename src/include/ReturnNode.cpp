@@ -14,6 +14,8 @@ ExprResult ReturnNode::eval()
 	ExprResult value = mValue->eval();
 	ActivationReg* areg = ActivationReg::getInstance();
 	SymbolTable* table = areg->top();
+	// Grava um símbolo especial na tabela de símbolos para armazenar
+	// o retorno da função
 	Symbol* ret = new Symbol("--return", value.getType(), true);
 	ret->setValue(value.getValue());
 	table->add(ret);

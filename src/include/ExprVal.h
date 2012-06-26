@@ -2,6 +2,9 @@
 
 #include "Val.h"
 
+/**
+ * Classe Template para valores da linguagem
+ */
 template <class T>
 class ExprVal: public Val {
 	protected:

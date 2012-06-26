@@ -54,5 +54,5 @@ main does {
 	outra = outra ++ " String";
 	print(outra ++ "\n");
 
-	print("Repete: ", repete("abc", 2));
+	print("Repete: ", repete("abc", 2), "\n");
 }
